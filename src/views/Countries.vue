@@ -58,7 +58,6 @@
     dateCreated: string;
     active: boolean;
   }
-  
 
   export default class Countries extends Vue {
     countries: Country[] = [];
