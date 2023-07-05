@@ -1,8 +1,9 @@
 <template>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 animate__animated animate__zoomIn">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
+            <th></th>
             <th scope="col" class="px-6 py-3">
               ID
             </th>
@@ -26,6 +27,9 @@
             v-for="country in countries"
             :key="country.id"
           >
+          <td class="px-6 py-4">
+                <Button buttonText="View"  @click="showCountry(country)" />
+            </td>
             <td class="px-6 py-4">
               {{ country.id }}
             </td>
@@ -44,13 +48,23 @@
           </tr>
         </tbody>
       </table>
+
+      <div v-if="selectedCountry">
+      <h2>Selected Country:</h2>
+      <p>ID: {{ selectedCountry.id }}</p>
+      <p>Name: {{ selectedCountry.name }}</p>
+      <p>Status: {{ selectedCountry.status }}</p>
+      <p>Active: {{ selectedCountry.active }}</p>
+      <p>Date Created: {{ selectedCountry.dateCreated }}</p>
+    </div>
     </div>
   </template>
   
   <script lang="ts">
-  import { Vue } from 'vue-property-decorator';
+  import { Vue, Component } from 'vue-property-decorator';
   import axios from 'axios';
-  
+  import Button from "@/components/Button.vue";
+
   interface Country {
     id: number;
     name: string;
@@ -58,9 +72,15 @@
     dateCreated: string;
     active: boolean;
   }
-
+  
+  @Component({
+    components:{
+        Button
+    }
+  })
   export default class Countries extends Vue {
     countries: Country[] = [];
+    selectedCountry: Country | null = null;
   
     mounted() {
       this.fetchCountries();
@@ -76,6 +96,10 @@
           console.error('Error fetching countries:', error);
         });
     }
+
+    showCountry(country: Country) {
+    this.selectedCountry = country;
+  }
   }
   </script>
   
