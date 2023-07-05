@@ -13,3 +13,13 @@ export const getCountries = async () => {
   }
 };
 
+//Function to get a country by id
+export const getCountryById = async (countryId) =>{
+    try {
+        const response = await axios.get(`${baseURL}/countries/id/${countryId}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Failed to fetch country with ID ${countryId}:`, error);
+        throw error;
+    }
+}
