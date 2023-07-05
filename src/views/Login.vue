@@ -1,16 +1,16 @@
 <template>
-    <div class="flex flex-col bg-indigo-500 items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <div class="flex flex-col bg-gray-100 items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 animate__animated animate__rotateInDownLeft">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-            Sign in to your account
+            Sign in to your account {{username}}
           </h1>
           <form class="space-y-4 md:space-y-6">
             <FormInput
               placeholder="Enter your username"
               v-model="username"
               type="text"
-              title="Enter Your username"
+              title="Enter Username"
               required="true"
             />
             <FormInput
@@ -27,7 +27,7 @@
                 </a>
               </div>
             </div>
-            <Button type="submit" buttonText="Login" @click="printUsernameAndPassword" />
+            <Button buttonText="Login" @click="printUsernameAndPassword" />
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
               Don't have an account?
               <a href="#" class="font-medium text-indigo-500 hover:underline dark:text-blue-500"></a>
@@ -43,6 +43,11 @@
   import FormInput from "@/components/FormInput.vue";
   import Button from "@/components/Button.vue";
   
+  interface User {
+    usernameValue: string;
+    passwordValue: string;
+  }
+  
   @Component({
     components: {
       FormInput,
@@ -52,10 +57,13 @@
   export default class Login extends Vue {
     username: string = "";
     password: string = "";
+    user: User = { usernameValue: "", passwordValue: "" };
   
     printUsernameAndPassword() {
-      console.log("Username: ", this.username);
-      console.log("Password: ", this.password);
+      this.user.usernameValue = this.username;
+      this.user.passwordValue = this.password;
+      console.log("Username: ", this.user.usernameValue);
+      console.log("Password: ", this.user.passwordValue);
     }
   }
   </script>

@@ -1,13 +1,18 @@
 <template>
   <div class="font-raleway">
-    <router-view />
+    <MainLayout />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import MainLayout from "./components/MainLayout.vue"
 
-@Component
+@Component({
+  components:{
+    MainLayout
+  }
+})
 export default class App extends Vue {}
 </script>
 
